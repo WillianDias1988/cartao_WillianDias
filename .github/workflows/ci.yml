@@ -1,0 +1,75 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-static-site:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate repository hygiene
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          test -f index.html
+          test -f styles/main.css
+          test -f main.py
+
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          import sys
+
+          root = Path('.').resolve()
+          html = (root / 'index.html').read_text(encoding='utf-8')
+
+          required = [
+              '<meta charset="UTF-8">',
+              '<meta name="viewport"',
+              'https://github.com/WillianDias1988',
+              'https://www.linkedin.com/in/williandias01',
+          ]
+          for needle in required:
+              if needle not in html:
+                  print(f'Missing required reference: {needle}', file=sys.stderr)
+                  sys.exit(1)
+
+          refs = re.findall(r'(?:src|href)="([^"]+)"', html)
+          for ref in refs:
+              if ref.startswith(('http://', 'https://', 'mailto:', '#')):
+                  continue
+              path = (root / ref.lstrip('./')).resolve()
+              if not path.exists():
+                  print(f'Missing referenced file: {ref}', file=sys.stderr)
+                  sys.exit(1)
+
+          budget = 1_048_576
+          oversized = []
+          for path in root.rglob('*'):
+              if not path.is_file():
+                  continue
+              if path.suffix.lower() not in {'.png', '.jpg', '.jpeg', '.webp', '.gif', '.pdf', '.svg'}:
+                  continue
+              if path.stat().st_size > budget:
+                  oversized.append(f'{path.relative_to(root)} ({path.stat().st_size} bytes)')
+
+          if oversized:
+              print('Oversized assets found:', file=sys.stderr)
+              for item in oversized:
+                  print(f'- {item}', file=sys.stderr)
+              sys.exit(1)
+          PY
