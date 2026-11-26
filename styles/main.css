@@ -1,250 +1,102 @@
 :root {
-  font-size: 70.0%;
+  --bg: #f5f6fb;
+  --surface: #ffffff;
+  --ink: #14183a;
+  --muted: #565b74;
+  --line: #dfe1ee;
+  --accent: #512bd4;
+  --accent-ink: #3d1fa8;
+  --code-bg: #1b1640;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
+*, *::before, *::after { box-sizing: border-box; }
 
 body {
-  -webkit-font-smoothing: antialiased;
-  font-family: "Poppins", sans-serif;
-}
-
-button {
-  cursor: pointer;
-}
-
-
-
-@media (max-width: 1800px) {
-  .circle1 {
-    bottom: 3%;
-    right: 15%;
-  }
-  .circle2 {
-    top: 3%;
-    left: 15%;
-  }
-}
-
-@media (max-width: 1100px) {
-  .circle1 {
-    bottom: 3%;
-    right: 10%;
-  }
-  .circle2 {
-    top: 3%;
-    left: 10%;
-  }
-}
-
-@media (max-width: 650px) {
-  .circle1 {
-    bottom: 3%;
-    right: 5%;
-  }
-  .circle2 {
-    top: 3%;
-    left: 5%;
-  }
-}
-
-@media (max-width: 800px) {
-  .circle1 {
-    bottom: 3%;
-    right: -5%;
-  }
-  .circle2 {
-    top: 3%;
-    left: -5%;
-  }
-}
-
-.content {
+  margin: 0;
   min-height: 100vh;
-  background: -webkit-gradient(linear, left bottom, right top, from(#5b4463), to(#28223f));
-  background: linear-gradient(to right top, #000000, #525252);
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  display: grid;
+  place-items: center;
+  padding: 32px 16px;
+  font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(81, 43, 212, 0.10), transparent 55%),
+    var(--bg);
+  -webkit-font-smoothing: antialiased;
 }
 
-.content .glass {
-  min-height: 55rem;
-  width: 37rem;
-  background: -webkit-gradient(linear, left top, right bottom, from(rgba(30, 30, 57, 0.5)), to(rgba(30, 30, 57, 0.3)));
-  background: linear-gradient(to right bottom, rgba(30, 30, 57, 0.5), rgba(30, 30, 57, 0.3));
-  border-radius: 2rem;
-  z-index: 3;
-  -webkit-backdrop-filter: blur(1.2rem);
-          backdrop-filter: blur(1.2rem);
-}
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 
-.content .glass header {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-
-.content .glass header .avatar {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  width: 17rem;
-  height: 17rem;
-  border-radius: 50%;
-  border: 2px #ffffff solid;
-  margin: 1.5rem 0 1rem 0;
-  padding: 0.8rem;
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-
-.content .glass header h1 {
-  font-size: 3.2rem;
-  font-weight: 400;
-  color: #fff;
-}
-
-.content .glass header p {
-  font-size: 1.6rem;
-  font-weight: 300;
-  color: #fff;
-}
-
-.content .glass main p {
-  font-size: 1.6rem;
-  font-weight: 300;
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 40px 80px -40px rgba(20, 24, 58, 0.35);
+  overflow: hidden;
   text-align: center;
-  color: #fff;
-  padding: 1.8rem 5rem 2rem 5rem;
+  padding-bottom: 28px;
 }
 
-.content .glass main .socialmedia {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+/* The one bold element: a code band that names him in C# */
+.card__band {
+  background: var(--code-bg);
+  padding: 22px 20px 72px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: clamp(10.5px, 2.9vw, 13px);
+  color: #e9e6ff;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+.card__band code { font: inherit; }
+.k { color: #b9a6ff; }
+.t { color: #7ee0c3; }
+.s { color: #f5c77e; }
+
+.avatar {
+  width: 112px; height: 112px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: -56px auto 16px;
+  border: 4px solid var(--surface);
+  background: var(--line);
+  display: block;
 }
 
-.content .glass main .socialmedia a {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  color: #fff;
-  background-color: #000000;
-  text-decoration: none;
-  border-radius: 0.5rem;
-  padding: 1rem 1.4rem;
-  margin-bottom: 2rem;
-  font-size: 1.6rem;
-  font-weight: 300;
-  -webkit-transition: 0.2s;
-  transition: 0.2s;
+h1 { margin: 0; font-size: 30px; letter-spacing: -0.02em; font-weight: 700; }
+.role { margin: 6px 0 14px; color: var(--accent); font-weight: 500; font-size: 17px; }
+.bio { margin: 0 auto 20px; max-width: 34ch; color: var(--muted); font-size: 15px; line-height: 1.55; padding: 0 12px; }
+
+.stack {
+  list-style: none; margin: 0 14px 24px; padding: 0;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+}
+.stack li {
+  font-size: 13px; font-weight: 500;
+  padding: 5px 11px; border-radius: 999px;
+  background: #ece7fd; color: var(--accent-ink);
 }
 
-.content .glass main .socialmedia a img {
-  width: 2.8rem;
-  margin-right: 0.8rem;
+.links { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 28px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 11px 14px; border-radius: 9px;
+  font-weight: 500; font-size: 15px; text-decoration: none;
+  background: var(--accent); color: #fff; border: 1px solid var(--accent);
+  transition: background-color .15s ease, border-color .15s ease;
 }
+.btn:first-child { grid-column: 1 / -1; padding: 13px 14px; }
+.btn:hover { background: var(--accent-ink); }
+.btn--ghost { background: var(--surface); color: var(--ink); border-color: var(--line); }
+.btn--ghost:hover { background: var(--bg); border-color: var(--muted); }
+.btn--ghost:last-child { grid-column: 1 / -1; }
+.btn svg { width: 16px; height: 16px; fill: currentColor; }
 
-.content .glass main .socialmedia a:hover {
-  background-color: #000000;
-}
+.foot { margin: 22px 0 0; font-size: 14px; color: var(--muted); line-height: 1.7; }
+.foot a { color: var(--ink); font-weight: 500; text-decoration: none; }
+.foot a:hover { color: var(--accent); }
 
-.content .glass main .socialmedia #linkedin {
-  margin-right: 2.2rem;
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
 }
-
-.content .glass footer {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 0px 0px 20px 20px;
-  padding: 1rem 2.5rem;
-}
-
-.content .glass footer h3 {
-  font-size: 1.6rem;
-  font-weight: 2800;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  padding: 0 0.4rem 1rem 0;
-  border: rgba(255, 255, 255, 0.1);
-}
-
-.content .glass footer h5 {
-  font-size: 1.2rem;
-  font-weight: 1200;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0.4rem;
-  padding: 0.7rem;
-  margin-bottom: 1rem;
-}
-
-.content .glass footer .line {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-flow: row wrap;
-          flex-flow: row wrap;
-}
-/*# sourceMappingURL=main.css.map */
